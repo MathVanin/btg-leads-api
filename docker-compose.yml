@@ -1,0 +1,83 @@
+services:
+  app:
+    container_name: btg-leads-api
+    build: src
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_ACTIVE=dev
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+    networks:
+      - btg-network
+
+  mysql:
+    container_name: btg-leads-mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: btg
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    networks:
+      - btg-network
+
+  mongo:
+    container_name: btg-leads-mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    healthcheck:
+        test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+        interval: 5s
+        timeout: 10s
+        retries: 5
+    networks:
+      - btg-network
+
+  sonarqube:
+    container_name: btg-sonarqube
+    image: sonarqube:lts
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://db-sonar:5432/sonar
+      - SONAR_JDBC_USERNAME=${SONAR_USERNAME}
+      - SONAR_JDBC_PASSWORD=${SONAR_PASSWORD}
+    depends_on:
+      db-sonar:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+    networks:
+      - btg-network
+
+  db-sonar:
+    container_name: btg-sonarqube-db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sonar"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - btg-network
+
+networks:
+  btg-network:
+    driver: bridge
