@@ -1,0 +1,45 @@
+# ===========================
+# Configuracoes do Servidor
+# ===========================
+server:
+  port: ${SERVER_PORT}
+  servlet:
+    context-path: /api/v1
+
+# ===========================
+# Configuracoes do Spring
+# ==========================
+spring:
+  application:
+    name: btg-leads-api
+  datasource:
+    # ===========================
+    # Configuracoes do MySQL
+    # ===========================
+    url: jdbc:mysql://localhost:3306/btg_leads?useSSL=false
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_ROOT_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# =============================
+# Swagger
+# =============================
+springdoc:
+  swagger-ui:
+    path: /api/swagger-ui.html
+
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    com.btg: DEBUG
+
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 86400000  # 24h em ms
