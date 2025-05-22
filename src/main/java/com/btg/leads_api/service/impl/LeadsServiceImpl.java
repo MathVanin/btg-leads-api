@@ -8,7 +8,14 @@ import com.btg.leads_api.mapper.LeadsMapper;
 import com.btg.leads_api.repository.LeadsRepository;
 import com.btg.leads_api.service.LeadsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import static com.btg.leads_api.utils.Constants.*;
 
@@ -72,5 +79,18 @@ public class LeadsServiceImpl implements LeadsService {
     @Override
     public LeadsResponseDto mapearParaResponse(Leads lead) {
         return leadsMapper.entidadeParaResponseDto(lead);
+    }
+
+    @Override
+    public List<LeadsResponseDto> mapearParaResponse(List<Leads> lead) {
+        List<LeadsResponseDto> leadsResponse = new ArrayList<>();
+        lead.forEach(l -> leadsResponse.add(mapearParaResponse(l)));
+        return leadsResponse;
+    }
+
+    @Override
+    public Page<Leads> listarLeads(Pageable pageable, UUID uuid, String nome, String email, String telefone,
+                                   String cpf, LocalDate dataCadastro) {
+        return leadsRepository.findWithFilters(pageable, uuid, nome, email, telefone, cpf, dataCadastro);
     }
 }

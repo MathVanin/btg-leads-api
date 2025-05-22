@@ -1,12 +1,14 @@
 package com.btg.leads_api.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "leads", schema = "btg")
+@Data
+@Table(name = "leads", schema = "btg_leads")
 public class Leads {
     @Id
     @Column(name = "id")

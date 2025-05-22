@@ -1,12 +1,14 @@
 package com.btg.leads_api.dto;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
-@AllArgsConstructor
+@Data
 public class LeadsResponseDto {
     private String uuid;
     private String nome;
     private String email;
     private String telefone;
-    private String dataCriacao;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private String dataCadastro;
 }

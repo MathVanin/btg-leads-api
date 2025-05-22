@@ -44,3 +44,7 @@ security:
   jwt:
     secret: ${JWT_SECRET}
     expiration: 86400000  # 24h em ms
+
+sonar:
+  login: squ_1212f6dddb28db51faac843f335e72400c9785f9
+  projectName: btg-leads-api
