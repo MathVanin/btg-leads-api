@@ -2,7 +2,7 @@
 # Configuracoes do Servidor
 # ===========================
 server:
-  port: ${SERVER_PORT}
+  port: 8081
   servlet:
     context-path: /api/v1
 
@@ -16,11 +16,12 @@ spring:
     # ===========================
     # Configuracoes do MySQL
     # ===========================
-    url: jdbc:mysql://localhost:3306/btg_leads?useSSL=false
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_ROOT_PASSWORD}
+    url: jdbc:mysql://localhost:3306/btg_leads?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: SenhaSegura123
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
