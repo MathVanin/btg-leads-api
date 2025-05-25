@@ -18,6 +18,7 @@ import java.util.UUID;
 @RequestMapping("/leads")
 @RequiredArgsConstructor
 public class LeadsController {
+
     private final LeadsFacade leadsFacade;
 
     @PostMapping
@@ -34,6 +35,7 @@ public class LeadsController {
                                               @RequestParam(required = false) String telefone,
                                               @RequestParam(required = false) String cpf,
                                               @RequestParam(required = false) LocalDate dataCadastro) {
-        return leadsFacade.listarLeads(pageable, uuid, nome, email, telefone, cpf, dataCadastro);
+        return leadsFacade.listarLeads(pageable, uuid,
+                nome, email, telefone, cpf, dataCadastro);
     }
 }
