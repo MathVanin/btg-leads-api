@@ -11,15 +11,17 @@ import java.util.List;
  * @param details - detalhes do erro
  * @param timestamp - data e hora do erro
  * @param path - caminho da requisição que causou o erro
+ * @param code - codigo do erro
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ErrorResponseDto(
         String message,
         List<String> details,
         Instant timestamp,
-        String path
+        String path,
+        Integer code
 ) {
-    public ErrorResponseDto(String message, List<String> details, String path) {
-        this(message, details, Instant.now(), path);
+    public ErrorResponseDto(String message, List<String> details, String path, Integer code) {
+        this(message, details, Instant.now(), path, code);
     }
 }

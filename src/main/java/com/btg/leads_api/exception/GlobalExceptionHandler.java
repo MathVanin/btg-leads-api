@@ -32,7 +32,8 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDto(
                         "Falha ao validar",
                         errors,
-                        request.getDescription(false).replace("uri=", "")));
+                        request.getDescription(false).replace("uri=", ""),
+                        HttpStatus.BAD_REQUEST.value()));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -46,7 +47,8 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDto(
                         "Dados duplicados",
                         List.of(ex.getMostSpecificCause().getMessage()),
-                        request.getDescription(false).replace("uri=", "")));
+                        request.getDescription(false).replace("uri=", ""),
+                        HttpStatus.CONFLICT.value()));
     }
 
     @ExceptionHandler(NotFoundEx.class)
@@ -60,7 +62,23 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDto(
                         "Recurso não encontrado",
                         List.of(ex.getMessage()),
-                        request.getDescription(false).replace("uri=", "")));
+                        request.getDescription(false).replace("uri=", ""),
+                        HttpStatus.NOT_FOUND.value()));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponseDto> handleIllegalArgumentException(
+            IllegalArgumentException ex,
+            WebRequest request) {
+
+        log.warn("Argumento inválido: {}", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDto(
+                        "Argumento inválido",
+                        List.of(ex.getMessage()),
+                        request.getDescription(false).replace("uri=", ""),
+                        HttpStatus.BAD_REQUEST.value()));
     }
 
     @ExceptionHandler(Exception.class)
@@ -74,6 +92,7 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponseDto(
                         "Internal server error",
                         List.of(ex.getMessage()),
-                        request.getDescription(false).replace("uri=", "")));
+                        request.getDescription(false).replace("uri=", ""),
+                        HttpStatus.INTERNAL_SERVER_ERROR.value()));
     }
 }
