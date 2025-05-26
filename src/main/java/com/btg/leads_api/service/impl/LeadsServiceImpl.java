@@ -4,6 +4,7 @@ import br.com.caelum.stella.validation.CPFValidator;
 import com.btg.leads_api.domain.Leads;
 import com.btg.leads_api.dto.LeadsRequestDto;
 import com.btg.leads_api.dto.LeadsResponseDto;
+import com.btg.leads_api.exception.LeadNotFoundEx;
 import com.btg.leads_api.mapper.LeadsMapper;
 import com.btg.leads_api.repository.LeadsRepository;
 import com.btg.leads_api.service.LeadsService;
@@ -91,6 +92,9 @@ public class LeadsServiceImpl implements LeadsService {
     @Override
     public Page<Leads> listarLeads(Pageable pageable, UUID uuid, String nome, String email, String telefone,
                                    String cpf, LocalDate dataCadastro) {
-        return leadsRepository.findWithFilters(pageable, uuid, nome, email, telefone, cpf, dataCadastro);
+        Page<Leads> leadsPage =leadsRepository.findWithFilters(pageable, uuid, nome, email, telefone, cpf, dataCadastro);
+        if (leadsPage.isEmpty())
+            throw new LeadNotFoundEx("Nenhum lead encontrado com os filtros.");
+        return leadsPage;
     }
 }
