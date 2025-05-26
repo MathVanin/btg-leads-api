@@ -49,6 +49,20 @@ public class GlobalExceptionHandler {
                         request.getDescription(false).replace("uri=", "")));
     }
 
+    @ExceptionHandler(NotFoundEx.class)
+    public ResponseEntity<ErrorResponseDto> handleNotFoundException(
+            NotFoundEx ex,
+            WebRequest request) {
+
+        log.warn("Recurso não encontrado: {}", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponseDto(
+                        "Recurso não encontrado",
+                        List.of(ex.getMessage()),
+                        request.getDescription(false).replace("uri=", "")));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto> handleAllExceptions(
             Exception ex,
