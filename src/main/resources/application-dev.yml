@@ -2,7 +2,7 @@
 # Configuracoes do Servidor
 # ===========================
 server:
-  port: 8081
+  port: 8082
   servlet:
     context-path: /leads/v1
   error:
@@ -29,6 +29,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  thymeleaf:
+    # ===========================
+    # Configuracoes do Thymeleaf
+    # ===========================
+    cache: false
+    check-template-location: true
+    suffix: .html
+    prefix: classpath:/templates/
 
 # =============================
 # Swagger
@@ -40,8 +48,7 @@ springdoc:
     path: /swagger-ui.html
     url: /leads/v1/api-docs
   paths-to-match: /v1/**
-  packages-to-scan: com.btg.leads_api.controller
-
+  packages-to-scan: com.btg.leadsapi.controller
 
 logging:
   level:
