@@ -1,19 +1,4 @@
 services:
-  app:
-    container_name: btg-leads-api
-    build: .
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-    depends_on:
-      mysql:
-        condition: service_healthy
-      mongo:
-        condition: service_healthy
-    networks:
-      - btg-network
-
   mysql:
     container_name: btg-leads-mysql
     image: mysql:8.0
@@ -27,6 +12,21 @@ services:
       interval: 5s
       timeout: 10s
       retries: 5
+    networks:
+      - btg-network
+
+  app:
+    container_name: btg-leads-api
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
     networks:
       - btg-network
 

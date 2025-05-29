@@ -1,11 +1,11 @@
-package com.btg.leads_api.dto;
+package com.btg.leadsapi.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import static com.btg.leads_api.utils.Constants.*;
+import static com.btg.leadsapi.utils.Constants.*;
 
 /**
  * DTO para criacao de um lead.

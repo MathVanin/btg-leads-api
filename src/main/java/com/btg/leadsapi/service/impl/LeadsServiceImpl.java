@@ -1,13 +1,15 @@
-package com.btg.leads_api.service.impl;
+package com.btg.leadsapi.service.impl;
 
 import br.com.caelum.stella.validation.CPFValidator;
-import com.btg.leads_api.domain.Leads;
-import com.btg.leads_api.dto.LeadsRequestDto;
-import com.btg.leads_api.dto.LeadsResponseDto;
-import com.btg.leads_api.exception.NotFoundEx;
-import com.btg.leads_api.mapper.LeadsMapper;
-import com.btg.leads_api.repository.LeadsRepository;
-import com.btg.leads_api.service.LeadsService;
+import com.btg.leadsapi.domain.Leads;
+import com.btg.leadsapi.dto.LeadsRequestDto;
+import com.btg.leadsapi.dto.LeadsResponseDto;
+import com.btg.leadsapi.exception.DadoCadastradoEx;
+import com.btg.leadsapi.exception.DadoInvalidoEx;
+import com.btg.leadsapi.exception.NotFoundEx;
+import com.btg.leadsapi.mapper.LeadsMapper;
+import com.btg.leadsapi.repository.LeadsRepository;
+import com.btg.leadsapi.service.LeadsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +19,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-import static com.btg.leads_api.utils.Constants.*;
+import static com.btg.leadsapi.utils.Constants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,42 +31,46 @@ public class LeadsServiceImpl implements LeadsService {
     private final LeadsMapper leadsMapper;
 
     @Override
-    public void validarNome(String nome) {
-        if (nome.length() < 3)
-            throw new IllegalArgumentException(NOME_INVALIDO);
+    public void validarDados(LeadsRequestDto leadsRequestDto){
+        validarNome(leadsRequestDto.nome());
+        validarEmail(leadsRequestDto.email());
+        validarTelefone(leadsRequestDto.telefone());
+        validarCpf(leadsRequestDto.cpf());
     }
 
-    @Override
-    public void validarEmail(String email) {
+    private void validarNome(String nome) {
+        if (nome.length() < 3)
+            throw new DadoInvalidoEx(NOME);
+    }
+
+    private void validarEmail(String email) {
         if (email.length() < 5)
-            throw new IllegalArgumentException(EMAIL_INVALIDO);
+            throw new DadoInvalidoEx(EMAIL);
         leadsRepository.findByEmail(email)
                 .ifPresent(lead -> {
-                    throw new IllegalArgumentException(EMAIL_JA_CADASTRADO);
+                    throw new DadoCadastradoEx(EMAIL);
                 });
     }
 
-    @Override
-    public void validarTelefone(String telefone) {
+    private void validarTelefone(String telefone) {
         if (telefone.length() < 10)
-            throw new IllegalArgumentException(TELEFONE_INVALIDO);
+            throw new DadoInvalidoEx(TELEFONE);
         leadsRepository.findByTelefone(telefone)
                 .ifPresent(lead -> {
-                    throw new IllegalArgumentException(TELEFONE_JA_CADASTRADO);
+                    throw new DadoCadastradoEx(TELEFONE);
                 });
     }
 
-    @Override
-    public void validarCpf(String cpf) {
+    private void validarCpf(String cpf) {
         CPFValidator cpfValidator = new CPFValidator();
         try {
             cpfValidator.assertValid(cpf);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(CPF_INVALIDO);
+            throw new DadoInvalidoEx(CPF);
         }
         leadsRepository.findByCpf(cpf)
                 .ifPresent(lead -> {
-                    throw new IllegalArgumentException(CPF_JA_CADASTRADO);
+                    throw new DadoCadastradoEx(CPF);
                 });
     }
 
@@ -84,9 +91,7 @@ public class LeadsServiceImpl implements LeadsService {
 
     @Override
     public List<LeadsResponseDto> mapearParaResponse(List<Leads> lead) {
-        List<LeadsResponseDto> leadsResponse = new ArrayList<>();
-        lead.forEach(l -> leadsResponse.add(mapearParaResponse(l)));
-        return leadsResponse;
+        return lead.stream().map(this::mapearParaResponse).toList();
     }
 
     @Override

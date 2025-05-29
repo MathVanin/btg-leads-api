@@ -1,4 +1,4 @@
-package com.btg.leads_api.domain;
+package com.btg.leadsapi.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;

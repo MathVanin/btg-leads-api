@@ -1,4 +1,4 @@
-package com.btg.leads_api;
+package com.btg.leadsapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

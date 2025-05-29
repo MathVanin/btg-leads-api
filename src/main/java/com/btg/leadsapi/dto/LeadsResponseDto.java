@@ -1,4 +1,4 @@
-package com.btg.leads_api.dto;
+package com.btg.leadsapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

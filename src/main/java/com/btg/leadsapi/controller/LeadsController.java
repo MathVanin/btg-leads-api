@@ -1,13 +1,14 @@
-package com.btg.leads_api.controller;
+package com.btg.leadsapi.controller;
 
-import com.btg.leads_api.dto.LeadsRequestDto;
-import com.btg.leads_api.dto.LeadsResponseDto;
-import com.btg.leads_api.exception.ErrorResponseDto;
-import com.btg.leads_api.facade.LeadsFacade;
+import com.btg.leadsapi.dto.LeadsRequestDto;
+import com.btg.leadsapi.dto.LeadsResponseDto;
+import com.btg.leadsapi.exception.ErrorResponseDto;
+import com.btg.leadsapi.facade.LeadsFacade;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,11 +24,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/leads")
 @RequiredArgsConstructor
+@Tag(name = "Leads", description = "Gerenciamento de Leads")
 public class LeadsController {
 
     private final LeadsFacade leadsFacade;
 
-    @Operation(summary = "Cria um novo lead")
+    @Operation(summary = "Cria um novo lead", description = "Cria um novo lead com os dados fornecidos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lead criado com sucesso",
                     content = @Content(mediaType = "application/json",

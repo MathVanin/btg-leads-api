@@ -1,4 +1,4 @@
-package com.btg.leads_api;
+package com.btg.leadsapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,8 +1,8 @@
-package com.btg.leads_api.service;
+package com.btg.leadsapi.service;
 
-import com.btg.leads_api.domain.Leads;
-import com.btg.leads_api.dto.LeadsRequestDto;
-import com.btg.leads_api.dto.LeadsResponseDto;
+import com.btg.leadsapi.domain.Leads;
+import com.btg.leadsapi.dto.LeadsRequestDto;
+import com.btg.leadsapi.dto.LeadsResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,7 @@ import java.util.UUID;
 
 @Service
 public interface LeadsService {
-    void validarNome(String nome);
-
-    void validarEmail(String email);
-
-    void validarTelefone(String telefone);
-
-    void validarCpf(String cpf);
+    void validarDados(LeadsRequestDto leadsRequestDto);
 
     Leads mapearParaEntidade(LeadsRequestDto dto);
 

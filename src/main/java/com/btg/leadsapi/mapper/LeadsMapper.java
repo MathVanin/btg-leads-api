@@ -1,10 +1,9 @@
-package com.btg.leads_api.mapper;
+package com.btg.leadsapi.mapper;
 
-import com.btg.leads_api.domain.Leads;
-import com.btg.leads_api.dto.LeadsRequestDto;
-import com.btg.leads_api.dto.LeadsResponseDto;
+import com.btg.leadsapi.domain.Leads;
+import com.btg.leadsapi.dto.LeadsRequestDto;
+import com.btg.leadsapi.dto.LeadsResponseDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface LeadsMapper {

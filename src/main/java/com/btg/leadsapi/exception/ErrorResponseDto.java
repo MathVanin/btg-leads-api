@@ -1,4 +1,4 @@
-package com.btg.leads_api.exception;
+package com.btg.leadsapi.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

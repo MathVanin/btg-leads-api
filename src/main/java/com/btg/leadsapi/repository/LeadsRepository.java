@@ -1,6 +1,6 @@
-package com.btg.leads_api.repository;
+package com.btg.leadsapi.repository;
 
-import com.btg.leads_api.domain.Leads;
+import com.btg.leadsapi.domain.Leads;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

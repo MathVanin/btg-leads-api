@@ -1,4 +1,4 @@
-package com.btg.leads_api.exception;
+package com.btg.leadsapi.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;

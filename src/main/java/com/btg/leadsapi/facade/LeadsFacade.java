@@ -1,11 +1,9 @@
-package com.btg.leads_api.facade;
+package com.btg.leadsapi.facade;
 
-import com.btg.leads_api.domain.Leads;
-import com.btg.leads_api.dto.LeadsRequestDto;
-import com.btg.leads_api.dto.LeadsResponseDto;
-import com.btg.leads_api.service.LeadsService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.btg.leadsapi.domain.Leads;
+import com.btg.leadsapi.dto.LeadsRequestDto;
+import com.btg.leadsapi.dto.LeadsResponseDto;
+import com.btg.leadsapi.service.LeadsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,10 +20,7 @@ public class LeadsFacade {
     private final LeadsService leadsService;
 
     public LeadsResponseDto criarLead(LeadsRequestDto dto) {
-        leadsService.validarNome(dto.nome());
-        leadsService.validarEmail(dto.email());
-        leadsService.validarTelefone(dto.telefone());
-        leadsService.validarCpf(dto.cpf());
+        leadsService.validarDados(dto);
         Leads lead = leadsService.mapearParaEntidade(dto);
         lead = leadsService.salvarLead(lead);
         return leadsService.mapearParaResponse(lead);
