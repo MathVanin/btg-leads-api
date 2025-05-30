@@ -14,7 +14,7 @@ public class RateLimiter {
     private final Map<String, RequestCounter> requestCounts = new ConcurrentHashMap<>();
 
     // Limite de requisições por período
-    public static final int REQUEST_LIMIT = 10;
+    public static final int REQUEST_LIMIT = 30;
 
     // Período de tempo em minutos
     public static final long TIME_LIMIT = 1;

@@ -131,7 +131,7 @@
             telefone: unmaskTelefone(document.getElementById('telephone').value),
             email: document.getElementById('email').value
         };
-        fetch('/leads/v1/leads', {
+        fetch('/api/v1/leads', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

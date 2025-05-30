@@ -26,9 +26,12 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/leadform", "/css/**", "/js/**", "/images/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/leads/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/leads/**").authenticated()
+                .requestMatchers(
+                    "/leadform", "/css/**", "/js/**", "/images/**",
+                    "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/api-docs"
+                ).permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/leads").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/leads").authenticated()
                 .anyRequest().permitAll()
             )
             .httpBasic(Customizer.withDefaults());

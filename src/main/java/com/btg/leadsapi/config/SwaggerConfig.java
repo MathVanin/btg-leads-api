@@ -2,7 +2,6 @@ package com.btg.leadsapi.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,8 +13,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Leads API")
                         .version("1.0.0")
-                        .description("API para gerenciamento de leads"))
-                .addServersItem(new Server().url("http://localhost:8081/leads/v1")
-                        .description("Servidor de Desenvolvimento"));
+                        .description("API para gerenciamento de leads"));
     }
 }

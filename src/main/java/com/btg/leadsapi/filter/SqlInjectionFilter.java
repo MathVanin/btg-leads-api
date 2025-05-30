@@ -23,6 +23,12 @@ public class SqlInjectionFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String path = httpRequest.getRequestURI();
+        // Ignora Swagger UI e OpenAPI docs
+        if (path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs")) {
+            chain.doFilter(request, response);
+            return;
+        }
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         String queryString = httpRequest.getQueryString();

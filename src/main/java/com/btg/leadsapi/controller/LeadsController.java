@@ -1,4 +1,4 @@
-package com.btg.leadsapi;
+package com.btg.leadsapi.controller;
 
 import com.btg.leadsapi.dto.LeadsRequestDto;
 import com.btg.leadsapi.dto.LeadsResponseDto;

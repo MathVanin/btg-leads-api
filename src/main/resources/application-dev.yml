@@ -4,7 +4,7 @@
 server:
   port: 8082
   servlet:
-    context-path: /leads/v1
+    context-path: /api/v1
   error:
     include-message: always
     include-binding-errors: always
@@ -46,8 +46,6 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
-    url: /leads/v1/api-docs
-  paths-to-match: /v1/**
   packages-to-scan: com.btg.leadsapi.controller
 
 logging:
@@ -64,3 +62,4 @@ security:
 sonar:
   login: squ_1212f6dddb28db51faac843f335e72400c9785f9
   projectName: btg-leads-api
+

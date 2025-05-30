@@ -1,8 +1,7 @@
-package com.btg.leadsapi;
+package com.btg.leadsapi.controller;
 
 
 import com.btg.leadsapi.dto.LeadsDto;
-import com.btg.leadsapi.dto.LeadsRequestDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
