@@ -1,7 +1,9 @@
 package com.btg.leadsapi.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -9,6 +11,8 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "leads", schema = "btg_leads")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Leads {
     @Id
     @Column(name = "id")
@@ -36,7 +40,7 @@ public class Leads {
 
     @PrePersist
     public void prePersist() {
-        this.dataCadastro = java.time.LocalDateTime.now();
-        this.uuid = java.util.UUID.randomUUID();
+        this.dataCadastro = LocalDateTime.now();
+        this.uuid = UUID.randomUUID();
     }
 }

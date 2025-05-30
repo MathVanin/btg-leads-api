@@ -33,8 +33,13 @@ public class LeadsFacade {
                                               String telefone,
                                               String cpf,
                                               LocalDate dataCadastro) {
-        Page<Leads> leads = leadsService.listarLeads(pageable, uuid, nome, email, telefone, cpf, dataCadastro);
-        List<LeadsResponseDto> leadsResponse = leadsService.mapearParaResponse(leads.getContent());
-        return new PageImpl<>(leadsResponse, pageable, leads.getTotalElements());
+        Page<Leads> leads =
+                leadsService.listarLeads(pageable, uuid,
+                        nome, email, telefone, cpf,
+                        dataCadastro);
+        List<LeadsResponseDto> leadsResponse =
+                leadsService.mapearParaResponse(leads.getContent());
+        return new PageImpl<>(leadsResponse, pageable,
+                leads.getTotalElements());
     }
 }

@@ -1,6 +1,7 @@
 package com.btg.leadsapi.service.impl;
 
 import br.com.caelum.stella.validation.CPFValidator;
+import br.com.caelum.stella.validation.InvalidStateException;
 import com.btg.leadsapi.domain.Leads;
 import com.btg.leadsapi.dto.LeadsRequestDto;
 import com.btg.leadsapi.dto.LeadsResponseDto;
@@ -16,10 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.btg.leadsapi.utils.Constants.*;
 
@@ -31,7 +30,7 @@ public class LeadsServiceImpl implements LeadsService {
     private final LeadsMapper leadsMapper;
 
     @Override
-    public void validarDados(LeadsRequestDto leadsRequestDto){
+    public void validarDados(LeadsRequestDto leadsRequestDto) {
         validarNome(leadsRequestDto.nome());
         validarEmail(leadsRequestDto.email());
         validarTelefone(leadsRequestDto.telefone());
@@ -65,7 +64,7 @@ public class LeadsServiceImpl implements LeadsService {
         CPFValidator cpfValidator = new CPFValidator();
         try {
             cpfValidator.assertValid(cpf);
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidStateException e) {
             throw new DadoInvalidoEx(CPF);
         }
         leadsRepository.findByCpf(cpf)
@@ -95,11 +94,18 @@ public class LeadsServiceImpl implements LeadsService {
     }
 
     @Override
-    public Page<Leads> listarLeads(Pageable pageable, UUID uuid, String nome, String email, String telefone,
-                                   String cpf, LocalDate dataCadastro) {
-        Page<Leads> leadsPage =leadsRepository.findWithFilters(pageable, uuid, nome, email, telefone, cpf, dataCadastro);
+    public Page<Leads> listarLeads(Pageable pageable,
+                                   UUID uuid, String nome
+            , String email, String telefone,
+                                   String cpf,
+                                   LocalDate dataCadastro) {
+        Page<Leads> leadsPage =
+                leadsRepository.findWithFilters(pageable,
+                        uuid, nome, email, telefone, cpf,
+                        dataCadastro);
         if (leadsPage.isEmpty())
-            throw new NotFoundEx("Nenhum lead encontrado com os filtros.");
+            throw new NotFoundEx("Nenhum lead encontrado " +
+                    "com os filtros.");
         return leadsPage;
     }
 }

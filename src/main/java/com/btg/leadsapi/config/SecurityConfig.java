@@ -1,9 +1,11 @@
 package com.btg.leadsapi.config;
 
 import com.btg.leadsapi.filter.RateLimitFilter;
+import com.btg.leadsapi.filter.SqlInjectionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
@@ -29,8 +31,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/leads/**").authenticated()
                 .anyRequest().permitAll()
             )
-            .httpBasic();
+            .httpBasic(Customizer.withDefaults());
         http.addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new SqlInjectionFilter(), RateLimitFilter.class);
         return http.build();
     }
 
