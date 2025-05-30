@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import static com.btg.leadsapi.utils.Constants.*;
 
@@ -30,5 +32,4 @@ public record LeadsRequestDto(
         @NotBlank(message = CPF_INVALIDO)
         @Pattern(regexp = "\\d{11}", message = CPF_INVALIDO)
         String cpf) {
-
 }

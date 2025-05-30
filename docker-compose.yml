@@ -1,6 +1,6 @@
 services:
   mysql:
-    container_name: btg-leads-mysql
+    container_name: btg-mysql
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: SenhaSegura123

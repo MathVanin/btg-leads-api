@@ -2,6 +2,7 @@ package com.btg.leadsapi.controller;
 
 
 import com.btg.leadsapi.dto.LeadsDto;
+import com.btg.leadsapi.dto.LeadsRequestDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +16,9 @@ public class WebController {
         this.templateEngine = templateEngine;
     }
 
-    @GetMapping("/teste")
+    @GetMapping("/form")
     public String showLeadForm(Model model) {
-        LeadsDto leadsDto = new LeadsDto("Nome", "Email",
-                "11957854584", "46394474851");
-        model.addAttribute("lead", leadsDto);
+        model.addAttribute("lead", new LeadsDto());
         return "leadform";
     }
 }
